@@ -8,17 +8,17 @@ export FORGE_VERSION='1.16.5-36.1.0'
 echo "Forge server version set to: $FORGE_VERSION"
 echo
 
-sudo chown -R minecraft:minecraft ${MC_HOME}
+sudo chown -R ${MINECRAFT_UID}:${MINECRAFT_GID} ${MC_HOME}
 
 # Auto updates
-if [ -f "${MC_HOME}/server/forge-${FORGE_VERSION}-installer.jar" ]; then
+if [ -f "${MC_HOME}/forge-${FORGE_VERSION}-installer.jar" ]; then
   echo "Existing Forge jar found: forge-${FORGE_VERSION}-installer.jar"
 else
   echo -e "\nNo version for forge ${FORGE_VERSION} found."
   echo -e "Compiling new binarys.\n"
-  curl -o forge-installer.jar https://maven.minecraftforge.net/net/minecraftforge/forge/${FORGE_VERSION}/forge-${FORGE_VERSION}-installer.jar && \
+  curl -o forge-${FORGE_VERSION}-installer.jar https://maven.minecraftforge.net/net/minecraftforge/forge/${FORGE_VERSION}/forge-${FORGE_VERSION}-installer.jar && \
     chmod +x *.jar && \
-    java -Xmx512M -jar forge-installer.jar --installServer ${MC_HOME}/server
+    java -Xmx512M -jar forge-${FORGE_VERSION}-installer.jar --installServer ${MC_HOME}/server
 fi
 
 # Launch the specified version
